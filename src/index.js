@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
+const patientRoutes = require('./routes/patients');
 const { errorHandler, rateLimitMiddleware } = require('./middleware/auth');
 
 const app = express();
@@ -36,8 +37,9 @@ app.get('/api/v1/status', (req, res) => {
   });
 });
 
-// Authentication Routes
+// API Routes
 app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/patients', patientRoutes);
 
 // 404 Handler
 app.use((req, res) => {
@@ -66,7 +68,14 @@ app.listen(PORT, () => {
   console.log(`POST   http://localhost:${PORT}/api/v1/auth/logout`);
   console.log(`GET    http://localhost:${PORT}/api/v1/auth/me`);
   console.log(`POST   http://localhost:${PORT}/api/v1/auth/refresh`);
-  console.log(`POST   http://localhost:${PORT}/api/v1/auth/change-password\n`);
+  console.log(`POST   http://localhost:${PORT}/api/v1/auth/change-password`);
+  console.log(`\n👥 Patient Management Endpoints:`);
+  console.log(`POST   http://localhost:${PORT}/api/v1/patients`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/patients`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/patients/:id`);
+  console.log(`PUT    http://localhost:${PORT}/api/v1/patients/:id`);
+  console.log(`DELETE http://localhost:${PORT}/api/v1/patients/:id`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/patients/stats/overview\n`);
 });
 
 module.exports = app;
