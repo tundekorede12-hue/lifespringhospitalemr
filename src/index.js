@@ -8,6 +8,7 @@ const patientRoutes = require('./routes/patients');
 const appointmentRoutes = require('./routes/appointments');
 const medicalHistoryRoutes = require('./routes/medicalHistory');
 const prescriptionRoutes = require('./routes/prescriptions');
+const labTestsRoutes = require('./routes/labTests');
 const { errorHandler, rateLimitMiddleware } = require('./middleware/auth');
 
 const app = express();
@@ -46,6 +47,7 @@ app.use('/api/v1/patients', patientRoutes);
 app.use('/api/v1/appointments', appointmentRoutes);
 app.use('/api/v1/medical-history', medicalHistoryRoutes);
 app.use('/api/v1/prescriptions', prescriptionRoutes);
+app.use('/api/v1/lab-tests', labTestsRoutes);
 
 // 404 Handler
 app.use((req, res) => {
@@ -108,7 +110,16 @@ app.listen(PORT, () => {
   console.log(`POST   http://localhost:${PORT}/api/v1/prescriptions/:id/refill`);
   console.log(`PUT    http://localhost:${PORT}/api/v1/prescriptions/:id`);
   console.log(`DELETE http://localhost:${PORT}/api/v1/prescriptions/:id`);
-  console.log(`\n✅ Total: 35 endpoints available!\n`);
+  console.log(`\n🧪 Lab Tests & Results Endpoints (8):`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/lab-tests/available`);
+  console.log(`POST   http://localhost:${PORT}/api/v1/lab-tests/orders`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/lab-tests/orders`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/lab-tests/orders/:id`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/lab-tests/patient/:patientId/orders`);
+  console.log(`POST   http://localhost:${PORT}/api/v1/lab-tests/orders/:id/results`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/lab-tests/orders/:id/results`);
+  console.log(`PUT    http://localhost:${PORT}/api/v1/lab-tests/orders/:id/status`);
+  console.log(`\n✅ Total: 43 endpoints available!\n`);
 });
 
 module.exports = app;
