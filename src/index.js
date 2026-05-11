@@ -5,6 +5,9 @@ require('dotenv').config();
 
 const authRoutes = require('./routes/auth');
 const patientRoutes = require('./routes/patients');
+const appointmentRoutes = require('./routes/appointments');
+const medicalHistoryRoutes = require('./routes/medicalHistory');
+const prescriptionRoutes = require('./routes/prescriptions');
 const { errorHandler, rateLimitMiddleware } = require('./middleware/auth');
 
 const app = express();
@@ -40,6 +43,9 @@ app.get('/api/v1/status', (req, res) => {
 // API Routes
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/patients', patientRoutes);
+app.use('/api/v1/appointments', appointmentRoutes);
+app.use('/api/v1/medical-history', medicalHistoryRoutes);
+app.use('/api/v1/prescriptions', prescriptionRoutes);
 
 // 404 Handler
 app.use((req, res) => {
@@ -62,20 +68,47 @@ app.listen(PORT, () => {
   console.log(`\n📚 API Documentation:`);
   console.log(`Health Check: http://localhost:${PORT}/health`);
   console.log(`API Status: http://localhost:${PORT}/api/v1/status`);
-  console.log(`\n🔐 Authentication Endpoints:`);
+  console.log(`\n🔐 Authentication Endpoints (6):`);
   console.log(`POST   http://localhost:${PORT}/api/v1/auth/register`);
   console.log(`POST   http://localhost:${PORT}/api/v1/auth/login`);
   console.log(`POST   http://localhost:${PORT}/api/v1/auth/logout`);
   console.log(`GET    http://localhost:${PORT}/api/v1/auth/me`);
   console.log(`POST   http://localhost:${PORT}/api/v1/auth/refresh`);
   console.log(`POST   http://localhost:${PORT}/api/v1/auth/change-password`);
-  console.log(`\n👥 Patient Management Endpoints:`);
+  console.log(`\n👥 Patient Management Endpoints (6):`);
   console.log(`POST   http://localhost:${PORT}/api/v1/patients`);
   console.log(`GET    http://localhost:${PORT}/api/v1/patients`);
   console.log(`GET    http://localhost:${PORT}/api/v1/patients/:id`);
   console.log(`PUT    http://localhost:${PORT}/api/v1/patients/:id`);
   console.log(`DELETE http://localhost:${PORT}/api/v1/patients/:id`);
-  console.log(`GET    http://localhost:${PORT}/api/v1/patients/stats/overview\n`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/patients/stats/overview`);
+  console.log(`\n📅 Appointment Management Endpoints (7):`);
+  console.log(`POST   http://localhost:${PORT}/api/v1/appointments`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/appointments`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/appointments/:id`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/appointments/patient/:patientId`);
+  console.log(`PUT    http://localhost:${PORT}/api/v1/appointments/:id`);
+  console.log(`DELETE http://localhost:${PORT}/api/v1/appointments/:id`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/appointments/doctor/:doctorId/available`);
+  console.log(`\n💊 Medical History & Vitals Endpoints (8):`);
+  console.log(`POST   http://localhost:${PORT}/api/v1/medical-history/patient/:patientId/conditions`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/medical-history/patient/:patientId/conditions`);
+  console.log(`PUT    http://localhost:${PORT}/api/v1/medical-history/conditions/:conditionId`);
+  console.log(`DELETE http://localhost:${PORT}/api/v1/medical-history/conditions/:conditionId`);
+  console.log(`POST   http://localhost:${PORT}/api/v1/medical-history/patient/:patientId/vitals`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/medical-history/patient/:patientId/vitals`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/medical-history/patient/:patientId/vitals/latest`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/medical-history/patient/:patientId/vitals/trend`);
+  console.log(`\n💉 Prescription Management Endpoints (8):`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/prescriptions/medications`);
+  console.log(`POST   http://localhost:${PORT}/api/v1/prescriptions`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/prescriptions`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/prescriptions/:id`);
+  console.log(`GET    http://localhost:${PORT}/api/v1/prescriptions/patient/:patientId`);
+  console.log(`POST   http://localhost:${PORT}/api/v1/prescriptions/:id/refill`);
+  console.log(`PUT    http://localhost:${PORT}/api/v1/prescriptions/:id`);
+  console.log(`DELETE http://localhost:${PORT}/api/v1/prescriptions/:id`);
+  console.log(`\n✅ Total: 35 endpoints available!\n`);
 });
 
 module.exports = app;
